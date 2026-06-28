@@ -3,5 +3,5 @@
 # Source from $PROFILE:  . "$HOME\cortex\profile.ps1"
 function cortex {
     Set-Location "$HOME\cortex"
-    copilot --allow-all --mcp-config "mcp\mcp-config.json" @args
+    copilot --allow-all --additional-mcp-config "@mcp\mcp-config.json" @args
 }
