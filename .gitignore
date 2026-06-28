@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.env
+.env.*
+secrets.*
+work/events.jsonl
+work/HANDOVER.md
+*.local.json
