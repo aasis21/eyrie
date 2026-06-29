@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "description": "Single source of truth for all projects orchestrated from this HQ. Only the project-router skill / scripts should mutate this file. Add your projects under 'projects'; '_example' is an ignored reference template.",
+  "projects": {},
+  "_example": {
+    "myproject": {
+      "path": "C:\\Users\\you\\myproject",
+      "repo": "owner/myproject",
+      "status": "active",
+      "tags": ["typescript", "web"],
+      "description": "One-line description of the project.",
+      "build": "npm install; npm run build",
+      "test": "npm test",
+      "run": "npm start"
+    }
+  }
+}

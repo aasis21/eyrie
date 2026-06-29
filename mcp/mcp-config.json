@@ -6,12 +6,6 @@
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}" },
       "tools": ["*"]
-    },
-    "playwright": {
-      "type": "local",
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "tools": ["*"]
     }
   }
 }

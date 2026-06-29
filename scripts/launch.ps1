@@ -1,3 +1,4 @@
-# Uses a local MCP config so cortex avoids global ~/.copilot state.
-Set-Location -LiteralPath 'C:\Users\akash\cortex'
-& copilot --mcp-config 'mcp\mcp-config.json'
+# Uses a local MCP config so the HQ avoids global ~/.copilot state.
+$Root = Split-Path -Parent $PSScriptRoot
+Set-Location -LiteralPath $Root
+& copilot --mcp-config (Join-Path $Root 'mcp\mcp-config.json')

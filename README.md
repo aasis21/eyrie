@@ -1,24 +1,27 @@
 # cortex
 
-Personal work **control center** — the single folder I open Copilot CLI from to
-orchestrate all my hobby projects. Pairs with [`engram`](../engram) (memory) as
-the orchestrating brain.
+A minimal **bootstrapper** for a personal or work HQ: one folder you open Copilot CLI
+from to manage a bunch of projects from a single entry point. cortex gives you a
+skeleton — a project registry, an orchestrator that routes requests, and a specialist
+template. You enrich the folder over time. Self-contained: never touches `~/.copilot`.
 
-## Layout
-- `AGENTS.md` — orchestrator router (auto-loaded by Copilot CLI).
-- `.github/agents/` — specialist agents (anya, engram, kirana360).
-- `projects/registry.json` — single source of truth: paths, repos, build/test/run.
-- `prompts/` — reusable prompt templates.
-- `skills/` — local skills: project-router, hello, bye.
-- `work/` — board, append-only events.jsonl, latest HANDOVER.
-- `mcp/mcp-config.json` — local MCP servers.
-- `scripts/` — status, capture, daily, launch.
-- `inbox.md` — quick capture.
+## Install
 
-## Use
-- Launch: `scripts/launch.ps1` (starts CLI with `--mcp-config mcp/mcp-config.json`).
-- Status: `pwsh scripts/status.ps1`  •  Capture: `pwsh scripts/capture.ps1 "idea"`.
-- Self-contained: never writes to `~/.copilot`. Secrets via `${ENV_VAR}`.
+```powershell
+irm https://raw.githubusercontent.com/aasis21/cortex-hq/main/install.ps1 | iex
+```
 
-## Projects
-Siblings under `~`: anya, engram, kirana360 (stub until cloned).
+Scaffolds an HQ under `~` and registers a launch command. Defaults to **cortex**, or
+pick another (neuron, nexus, axon, hub, helm, atlas) or a custom name — so multiple
+focused HQs coexist. Cross-platform: `python install.py`.
+
+## What you get
+- `AGENTS.md` — orchestrator that triages + routes (auto-loaded).
+- `registry.json` — your project catalog (empty to start).
+- `.github/agents/` — orchestrator + `project-specialist` template.
+- `.github/prompts/`, `.github/skills/` — example prompt + skill to copy.
+- `mcp/mcp-config.json` — local MCP servers (github). Secrets via `${ENV_VAR}`.
+- `scripts/launch.ps1` — opens the CLI with the local MCP config.
+- `scratch.md` — quick capture / backlog.
+
+Add projects, prompts, skills, and scripts as you grow. It's your folder.
