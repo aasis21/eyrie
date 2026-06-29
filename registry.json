@@ -8,10 +8,7 @@
       "repo": "owner/myproject",
       "status": "active",
       "tags": ["typescript", "web"],
-      "description": "One-line description of the project.",
-      "build": "npm install; npm run build",
-      "test": "npm test",
-      "run": "npm start"
+      "description": "One-line description of the project."
     }
   }
 }
