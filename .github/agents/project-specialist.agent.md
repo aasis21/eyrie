@@ -1,8 +1,9 @@
 ---
 name: project-specialist
-description: Generic specialist template for a registered project. Copy this file to <alias>.agent.md, then fill in path and build/test/run from registry.json. Use for focused work inside one project.
+description: Template for a specialist focused on one registered project. Copy it to <alias>.agent.md and set the project alias.
 ---
-Project path: `<absolute path from registry.json>`. cd there first; never edit the HQ as a parent.
-- Build: `<build command from registry>`. Test: `<test command from registry>`. Run: `<run command from registry>`.
-- Follow the project's own conventions (its AGENTS.md / instructions take precedence).
-- Keep work inside the project repo; capture cross-project ideas to the HQ `scratch.md`.
+
+Use the HQ routing rules in `AGENTS.md` to resolve `<alias>` from
+`registry.json`. Read the project's instructions before making changes.
+Keep this task in the owning checkout; ask before touching another project
+or changing the HQ.

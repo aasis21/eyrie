@@ -7,8 +7,17 @@ import stat
 from pathlib import Path
 
 
+def unique_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key {key!r}")
+        result[key] = value
+    return result
+
+
 def check_registry(registry):
-    data = json.loads(registry.read_text(encoding="utf-8-sig"))
+    data = json.loads(registry.read_text(encoding="utf-8-sig"), object_pairs_hook=unique_keys)
     if not isinstance(data, dict) or not isinstance(data.get("projects"), dict):
         raise ValueError("registry must contain a 'projects' object")
 
@@ -18,8 +27,10 @@ def check_registry(registry):
         if not alias.strip() or not isinstance(path, str) or not path.strip() or "\0" in path:
             raise ValueError(f"{alias!r}: expected a project alias and a non-empty path")
         try:
-            directory = registry.parent / Path(path).expanduser()
-            exists = stat.S_ISDIR(directory.stat().st_mode)
+            directory = Path(path).expanduser()
+            if directory.anchor and not directory.is_absolute():
+                raise ValueError(f"{alias!r}: use an absolute or HQ-relative project path")
+            exists = stat.S_ISDIR((registry.parent / directory).stat().st_mode)
         except (FileNotFoundError, NotADirectoryError):
             exists = False
         except (OSError, RuntimeError) as error:

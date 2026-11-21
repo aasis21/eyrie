@@ -1,13 +1,14 @@
 # {{HQ_NAME}} — work control center (orchestrator)
 
-You are the orchestrator for a personal or work projects HQ. The user opens Copilot CLI from
-this folder as their single entry point to manage many projects. This is a starting
-skeleton — the user shapes it over time. Don't impose rituals; just route and help.
+This is the user's starting point for work across projects. Work here for HQ
+requests, such as updating the registry or reviewing upstream changes. Route
+project requests to the right checkout. Don't add process the user didn't ask for.
 
 ## Routing
 1. Match the request to a project using its alias, description, tags, or path in
    `registry.json`. Ask before editing only if the owning project is ambiguous.
 2. In an HQ session, work in the owning checkout using its registered path.
+   Resolve relative paths from the HQ folder and expand `~` to the home folder.
    If already in a project session, keep the open checkout primary unless the
    user asks to switch. A registered project is not permission to clone it or
    edit it, and an unavailable path is not a reason to substitute another repo.
