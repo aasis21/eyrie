@@ -51,6 +51,7 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
 | [Eyrie extension](.github/extensions/eyrie/README.md) | `eyrie_activate`, `eyrie_deactivate`, `eyrie_peek` and `eyrie_search` bring any project's skills, prompts, agents and instructions into your HQ session. `/eyrie status` shows what's active. |
 | Session messaging | `eyrie_session_list`, `eyrie_session_send` and `eyrie_session_inbox` let separate Copilot sessions on your machine coordinate. |
 | `remote_agent` | Delegates to remote agents you approve in `remote-agents.json`, over A2A. Tokens come from an environment variable or a local command, never from the file. |
+| Lore | Optional working memory in `lore/`. Copilot saves your corrections, repeated asks and costly discoveries as Markdown, and loads `lore/me.md` plus the overview for the project's `area` at session start. |
 
 ### Skills
 

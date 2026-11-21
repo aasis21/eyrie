@@ -17,10 +17,12 @@ it as a git remote; my HQ is mine.
    - The folder (default: `~/<name>`).
    - Projects to register: I can paste paths, name one folder for you to
      list git repositories in, or skip. Don't scan anything else.
-   - Skills to keep: `falconry`, `preen`, `tick-me`, `session-communication`
-     and `workflow-discovery`, all on by default.
+   - Skills to keep, all on by default: `falconry`, `preen`, `tick-me`,
+     `session-communication` and `workflow-discovery`; and Lore memory (on
+     by default).
    Use defaults for anything I skip. If I mention how I like to work, fold it
-   into "How to work with me" in `AGENTS.md`.
+   into "How to work with me" in `AGENTS.md` and, with Lore kept, into
+   `lore/me.md`.
 4. **Preview once.** Show the folder, every file you'll create, the registry
    entries (path, description, `remote` from `git remote get-url origin` when
    present), the shell profile line, and the Copilot extension loader. Flag
@@ -32,7 +34,10 @@ it as a git remote; my HQ is mine.
    `.github/extensions/eyrie/`, the chosen `.github/skills/`, `profile.ps1`,
    `profile.sh`, `scripts/`, `registry.json`, `remote-agents.json` and
    `.gitignore`. Replace `{{HQ_NAME}}` and `{{COMMAND}}`. Put real entries
-   under `projects` and omit `_example`. Don't copy `docs/` or `README.md`.
+   under `projects` and omit `_example`. With Lore kept, copy `lore/me.md`
+   and seed it with any working preferences I mentioned; with Lore skipped,
+   omit `lore/` and remove the "Lore (memory)" section from `AGENTS.md`.
+   Don't copy `docs/` or `README.md`.
    Then run, from my HQ:
    `node scripts/install-shell.mjs --home "<hq>" --command "<name>"`.
    It adds one marked block to my shell profile and installs the repo-mode

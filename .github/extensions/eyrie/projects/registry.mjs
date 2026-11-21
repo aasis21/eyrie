@@ -86,6 +86,12 @@ export function listAll() {
         .map(([alias, entry]) => toProject(alias, entry));
 }
 
+// Optional top-level `defaultArea`: the Lore area loaded in HQ mode.
+export function defaultArea() {
+    const value = load().defaultArea;
+    return typeof value === "string" && value ? value : null;
+}
+
 export function getProject(alias) {
     const reg = load();
     if (!alias || alias.startsWith("_") || !reg.projects[alias]) return null;

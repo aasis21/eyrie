@@ -70,6 +70,32 @@ Never leave files loose in the HQ or a repository root.
   `session-communication` skill). Subagents use native agent tools.
 - Use `remote_agent` only with agents approved in `remote-agents.json`.
 
+## Lore (memory)
+
+`lore/` is this HQ's working memory. When I say "memory", I mean Lore unless I
+name Copilot's own memory. Eyrie loads `lore/me.md`, the overview for the
+session's project group (`lore/<area>/overview.md`, from the project's
+`area` in `registry.json`) and a list of topic files.
+
+- **Learn without being asked.** Save corrections, asks I repeat, my rework of
+  your output, discoveries that cost real effort, and decisions as they
+  happen. End a reply that saved something with `Learned: <one line> (<file>)`.
+- **Where:** how I work → `lore/me.md`; project-group facts →
+  `lore/<area>/<topic>.md`. Give each new file a `description` line in
+  frontmatter.
+- **Distill, then point.** Keep conclusions that are costly to rediscover and
+  link to the source (`file:line`, a doc, a command) instead of copying it.
+- **Facts:** short bullets tagged `[verified <date>]` (shown by code, a tool or
+  data) or `[stated <date>]` (someone said it). Update the existing file;
+  rewrite a wrong fact in place.
+- **Don't save** secrets, logs, task progress, opinions about people, or
+  anything a repository's instructions already say.
+- **Use with care:** a memory is what was true when written; check it against
+  current code or data before relying on it.
+- **Review:** "what do you know about me" → summarize Lore, flag stale or
+  duplicated facts, and offer to prune them.
+- **Promote:** when a learning repeats, move it into "How to work with me".
+
 ## Code words
 
 - **roost / aloft:** under the `falconry` skill, plan only until I say "aloft".

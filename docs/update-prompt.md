@@ -23,7 +23,9 @@ not reinstall Eyrie, pull it into my HQ, or overwrite my setup to match it.
    verify the review target, stop and explain what's missing.
 3. Cover HQ instructions, skills, prompts, agents, the `eyrie` extension,
    `profile.ps1`/`profile.sh` and `scripts/`; don't sync Eyrie's README,
-   website or sample registry data. Offer new skills as optional additions.
+   website or sample registry data. Lore's rules and hooks are reviewable like
+   any other file, but never propose changes to my `lore/` content files;
+   they are my learned memory. Offer new skills as optional additions.
    For each meaningful change, recommend **adopt** (fits as-is), **adapt**
    (merge the useful part into my conventions), or **skip** (not useful or
    conflicts with a deliberate choice). Explain why and show the proposed

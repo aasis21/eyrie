@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Project catalog for this HQ. Add entries under 'projects'; keys starting with '_' (such as '_example') are ignored. Paths can be absolute, home-relative (~/...), or relative to the HQ folder. Fields: path, description, remote, area, tags, status, auto_activate, enabled, worktrees.",
+  "description": "Project catalog for this HQ. Add entries under 'projects'; keys starting with '_' (such as '_example') are ignored. Paths can be absolute, home-relative (~/...), or relative to the HQ folder. Fields: path, description, remote, area, tags, status, auto_activate, enabled, worktrees. A project's 'area' selects which Lore overview (lore/<area>/overview.md) loads in repository mode; an optional top-level 'defaultArea' does the same in HQ mode.",
   "projects": {},
   "_example": {
     "myproject": {

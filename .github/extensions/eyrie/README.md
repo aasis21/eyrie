@@ -53,6 +53,20 @@ Hooks:
 - Next prompt after `/eyrie activate`: the pending catalog.
 - Every prompt: messages queued for this session with mode `context`.
 
+## Lore
+
+Optional working memory: Markdown under `<hq>/lore`. Without that folder every Lore
+hook does nothing. The rules for what to save live in `AGENTS.md` "Lore (memory)".
+
+- Session start: injects `lore/me.md`, the overview `lore/<area>/overview.md` (capped
+  at about 4 KB) and a list of topic files with their frontmatter `description`. The
+  area is the primary project's `area` in repository mode, and the registry's
+  top-level `defaultArea` (if set) in HQ mode.
+- Every prompt: a one-line reminder to save corrections, repeated asks, rework and
+  costly discoveries, and to end the reply with `Learned: ...`.
+- After a file-read tool opens a Lore file: how long ago it was edited, and a
+  reminder to check it before relying on it.
+
 ## Repository mode outside the HQ
 
 Copilot CLI loads this extension only in sessions started in the HQ. To use it inside
@@ -72,14 +86,15 @@ and never overwrites an existing path.
 ## Registry fields
 
 `registry.json` at the HQ root has a `projects` object keyed by alias. Keys starting
-with `_` are ignored.
+with `_` are ignored. An optional top-level `defaultArea` names the Lore area loaded
+in HQ mode.
 
 | Field | Meaning |
 |---|---|
 | `path` | Checkout path: absolute, `~/...`, or relative to the HQ. |
 | `description` | One line shown in summaries. |
 | `remote` | Git URL used for lazy clone. |
-| `area` | Optional grouping label. |
+| `area` | Optional grouping label; selects the Lore overview (`lore/<area>/overview.md`) loaded in repository mode. |
 | `tags` | Optional list of labels. |
 | `status` | Optional label, for example `active` or `archived`. |
 | `auto_activate` | Activate at HQ session start. |
@@ -99,6 +114,7 @@ extension.mjs            # tools, /eyrie command, hooks
 projects/                # registry, mode and scope, lazy clone, repository-mode matching
 copilot-assets/          # catalog scan, search and rendering
 sessions/                # cross-session messaging and metadata
+lore/                    # Lore memory hooks (startup context, reminder, read freshness)
 remote-agent/            # A2A client for remote_agent
 ```
 

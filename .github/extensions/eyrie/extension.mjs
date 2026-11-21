@@ -14,8 +14,11 @@ import {
     nextActiveScopeContext,
     activeAliases,
     sessionMode,
+    primaryAlias,
     statusText,
 } from "./projects/activation.mjs";
+import { eyrieRoot, getProject, defaultArea } from "./projects/registry.mjs";
+import { createLore } from "./lore/lore.mjs";
 import { ALL_KINDS } from "./copilot-assets/catalog.mjs";
 import { createSessionMessaging, DELIVERY_MODES } from "./sessions/messaging.mjs";
 import { readSessionMetadata } from "./sessions/metadata.mjs";
@@ -359,13 +362,27 @@ const eyrieCommand = {
 // Session lifecycle
 // ---------------------------------------------------------------------------
 
+const lore = createLore({ hqHome: eyrieRoot() });
+
 const session = await joinSession({
     tools: [tActivate, tDeactivate, tPeek, tSearch, tSessionList, tSessionSend, tSessionInbox, tRemoteAgent],
     commands: [eyrieCommand],
     hooks: {
         onSessionStart: async (input) => {
             try {
-                const additionalContext = bootstrap({ cwd: input?.workingDirectory });
+                const bootstrapContext = bootstrap({ cwd: input?.workingDirectory });
+                let loreContext = "";
+                try {
+                    loreContext = lore.startupContext({
+                        mode: sessionMode(),
+                        primaryAlias: primaryAlias(),
+                        getProject,
+                        defaultArea: defaultArea(),
+                    });
+                } catch (err) {
+                    log(`🦅 Eyrie: Lore load failed — ${err?.message || err}`);
+                }
+                const additionalContext = [bootstrapContext, loreContext].filter(Boolean).join("\n\n");
                 const active = activeAliases();
                 const activeSummary = active.length
                     ? `${active.join(", ")} active`
@@ -384,9 +401,17 @@ const session = await joinSession({
                 nextActiveScopeContext(),
                 flushPendingContext(),
                 sessionMessaging?.drainPendingContext(),
+                lore.reminder(),
             ].filter(Boolean);
             const additionalContext = contexts.join("\n\n");
             return additionalContext ? { additionalContext } : undefined;
+        },
+        onPostToolUse: async (input) => {
+            try {
+                return lore.postToolUse(input);
+            } catch {
+                return undefined;
+            }
         },
         onSessionEnd: async () => {
             sessionMessaging?.stop();

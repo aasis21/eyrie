@@ -14,6 +14,7 @@ const mocks = new Map([
         const t = () => globalThis.eyrieExtensionTest;
         export const bootstrap = ({ cwd }) => "Eyrie mode: hq; primary: " + cwd;
         export const sessionMode = () => "hq";
+        export const primaryAlias = () => null;
         export const activeAliases = () => [];
         export const flushPendingContext = () => t().pending.shift() || null;
         export const nextActiveScopeContext = () => null;
@@ -36,6 +37,11 @@ const mocks = new Map([
             processInbox: async () => {}, drainPendingContext: () => "",
             stop() {}, setBusy() {}, updateTitle() {}, updateMetadata() {},
         });
+    `],
+    ["./projects/registry.mjs", `
+        export const eyrieRoot = () => "/eyrie-test-hq-without-lore";
+        export const getProject = () => null;
+        export const defaultArea = () => null;
     `],
     ["./remote-agent/registry.mjs", `
         export const loadRegistry = async () => ({ agents: {} });
