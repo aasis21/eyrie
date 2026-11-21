@@ -1,14 +1,18 @@
 {
   "version": 1,
-  "description": "Project catalog for this HQ. Add entries under 'projects'; '_example' is ignored. Paths can be absolute, home-relative, or relative to the HQ folder.",
+  "description": "Project catalog for this HQ. Add entries under 'projects'; keys starting with '_' (such as '_example') are ignored. Paths can be absolute, home-relative (~/...), or relative to the HQ folder. Fields: path, description, remote, area, tags, status, auto_activate, enabled, worktrees.",
   "projects": {},
   "_example": {
     "myproject": {
-      "path": "C:\\Users\\you\\myproject",
-      "repo": "owner/myproject",
-      "status": "active",
+      "path": "~/src/myproject",
+      "description": "One-line description of the project.",
+      "remote": "https://github.com/owner/myproject.git",
+      "area": "work",
       "tags": ["typescript", "web"],
-      "description": "One-line description of the project."
+      "status": "active",
+      "auto_activate": false,
+      "enabled": false,
+      "worktrees": "~/src/myproject-worktrees"
     }
   }
 }

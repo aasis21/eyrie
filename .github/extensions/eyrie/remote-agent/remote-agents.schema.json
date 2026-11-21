@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eyrie remote-agents registry",
+  "description": "Approved outbound A2A connections. The model only ever sees the alias (object key); endpoint, auth scheme and credential reference are resolved by the remote_agent tool and never exposed to the model.",
+  "type": "object",
+  "required": ["agents"],
+  "properties": {
+    "agents": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "agentCardUrl", "auth"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Short display name shown to the model in the available-agents prompt section."
+          },
+          "description": {
+            "type": "string",
+            "description": "One-line routing hint. Not an authorization boundary."
+          },
+          "agentCardUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "HTTPS URL to the agent's Agent Card (e.g. https://host/.well-known/agent-card.json)."
+          },
+          "auth": {
+            "type": "object",
+            "description": "See README.md in this folder for the full token-source x header-shape model.",
+            "required": ["token", "header"],
+            "properties": {
+              "token": {
+                "type": "object",
+                "required": ["source"],
+                "description": "How the credential is obtained.",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "source": { "const": "env" },
+                      "envVar": {
+                        "type": "string",
+                        "description": "Name of the environment variable holding the credential. Never store the credential value itself here."
+                      }
+                    },
+                    "required": ["source", "envVar"]
+                  },
+                  {
+                    "properties": {
+                      "source": { "const": "command" },
+                      "command": {
+                        "type": "string",
+                        "description": "Shell command run to obtain the credential; trimmed stdout is used as the token (e.g. 'gh auth token')."
+                      },
+                      "cacheSeconds": {
+                        "type": "integer",
+                        "description": "Cache the command's token for this many seconds before re-running it. Omit/0 to run on every call.",
+                        "default": 0
+                      }
+                    },
+                    "required": ["source", "command"]
+                  }
+                ]
+              },
+              "header": {
+                "description": "How the resolved token is attached to a request: 'bearer' for Authorization: Bearer, or {type:'api_key', name} for a custom header.",
+                "oneOf": [
+                  { "const": "bearer" },
+                  {
+                    "type": "object",
+                    "required": ["type"],
+                    "properties": {
+                      "type": { "const": "api_key" },
+                      "name": { "type": "string", "default": "X-Api-Key" }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "timeoutMs": {
+            "type": "integer",
+            "description": "Bounded observation window for request/follow_up before returning current state without cancelling the remote task.",
+            "default": 600000
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,59 +1,85 @@
-# Cortex HQ
+# Eyrie
 
-Build a personal HQ for GitHub Copilot CLI. Give it your own name, register the
-projects you work on, and teach Copilot how you like to work across them.
-Cortex uses Copilot CLI's built-in instructions, skills, and agents. It doesn't
-bundle the Axon extension or add custom commands, runtime hooks, or MCP servers.
+**My personal GitHub Copilot headquarters. Make it yours.**
 
-## Set up my HQ
+An eyrie is a falcon's nest, built high so it can see everything below. Eyrie
+gives you the same for your projects: type one command in any terminal and
+GitHub Copilot CLI opens in your HQ, where it can find, read and work on every
+project you've registered. You no longer open Copilot inside each repository
+or re-explain how you work.
 
-Paste this into Copilot CLI from a directory where it can create the new HQ:
+```text
+$ jarvis
+> which of my projects owns the login page, and what skills does it have?
+> activate website and fix the flaky signup test
+```
 
-> Help me set up my own HQ from https://github.com/aasis21/cortex-hq. Read
-> `docs/setup-prompt.md` in that repo and follow it. Ask me one question at a
-> time and show me the plan before creating files.
+Eyrie is a reference, not something you clone. Copilot reads it and builds
+your own HQ with your name, your projects and your rules.
 
-If your assistant can't open GitHub links, copy the [full setup prompt](docs/setup-prompt.md)
-and point it to a local Cortex checkout or supply the named reference files
-from one commit. No shell profile or global configuration changes are needed.
-After setup, run `copilot` from your HQ folder and try:
-“Which projects are registered, and what workflows are available for one of them?”
+## Make it yours
 
-## Review updates for my HQ
+Open `copilot` anywhere and paste:
 
-Run `copilot` from your HQ folder and paste:
+> Set up my HQ using https://github.com/aasis21/eyrie. Read
+> `docs/setup-prompt.md` in that repo and follow it.
 
-> Review my local HQ for useful updates from https://github.com/aasis21/cortex-hq.
-> Read `docs/update-prompt.md` in that repo and follow it. Recommend what to
-> adopt, adapt, or skip, and don't edit anything until I approve the changes.
+Copilot asks at most four questions, each with a default (name, folder,
+projects, skills), shows one preview, and builds only after you approve. It
+adds a single marked block to your shell profile so your name becomes a
+command. Then open a new terminal, type your command and run `/eyrie status`.
 
-The [full update prompt](docs/update-prompt.md) works even if your HQ predates
-revision tracking. You might add a new skill as-is, blend a routing rule into
-your own instructions, or skip a workflow you don't use. Your existing HQ
-isn't replaced. If you only approve some changes, the next review resumes
-against the same upstream revision so nothing pending is lost.
+## Get new things
 
-## What goes in an HQ
+Open your HQ and paste:
 
-- `AGENTS.md` tells Copilot how to route requests and how you want it to work.
-- `registry.json` maps project aliases to existing checkouts and helps route
-  work to the right repo. Use an absolute path, a path starting with `~/`, or
-  a path relative to the HQ. The target repo's instructions govern the work.
-- The [workflow-discovery skill](.github/skills/workflow-discovery/SKILL.md) helps
-  find the right skill or prompt by its name and description before loading it.
-- `scratch.md`, example prompts, and specialist agents are optional starting
-  points. Add them when you need them.
-- `.cortex-source.json` records upstream review revisions and your decisions.
-  It does not contain project paths, preferences, or credentials.
+> Review my HQ for updates from https://github.com/aasis21/eyrie. Read
+> `docs/update-prompt.md` in that repo and follow it. Don't edit anything
+> until I approve.
 
-To add a project or change how the HQ works, ask the assistant from your HQ.
-For example: “Register `~/projects/website` as `website`, and ask me before
-committing changes.” Registering an existing checkout doesn't clone or modify it.
+Copilot compares what changed in Eyrie since your last review with your tuned
+HQ and recommends, change by change, whether to **adopt**, **adapt** or
+**skip** it. Your name, projects, rules and custom workflows stay yours.
 
-## Optional helper for assistants
+## What you get
 
-[`scripts/check_registry.py`](scripts/check_registry.py) checks registry
-structure and reports which project folders are available. An assistant can
-run `python <path-to-helper> <path-to-registry.json>` if Python is already
-available. It writes nothing and makes no network requests. Neither prompt
-requires this helper or installs anything globally.
+| Piece | What it does |
+|---|---|
+| Your command | `<name>` opens Copilot in your HQ from any terminal. `<name> enable <alias>` lets Copilot use HQ tools inside that project too. |
+| `registry.json` | Your projects: path, description, `remote`, tags, `auto_activate`, `enabled`, `worktrees`. |
+| `AGENTS.md` | How you like Copilot to work (talk, ground claims, scope), plus routing rules. |
+| [Eyrie extension](.github/extensions/eyrie/README.md) | `eyrie_activate`, `eyrie_deactivate`, `eyrie_peek` and `eyrie_search` bring any project's skills, prompts, agents and instructions into your HQ session. `/eyrie status` shows what's active. |
+| Session messaging | `eyrie_session_list`, `eyrie_session_send` and `eyrie_session_inbox` let separate Copilot sessions on your machine coordinate. |
+| `remote_agent` | Delegates to remote agents you approve in `remote-agents.json`, over A2A. Tokens come from an environment variable or a local command, never from the file. |
+
+### Skills
+
+| Skill | Use it for |
+|---|---|
+| [falconry](.github/skills/falconry/SKILL.md) | Plan first. Copilot only researches and plans until you say **aloft**; **roost** returns to planning. |
+| [preen](.github/skills/preen/SKILL.md) | A read-only code audit of a PR or named code: flow, files, names, readability, tests, complexity. |
+| [tick-me](.github/skills/tick-me/SKILL.md) | Recurring nudges that keep Copilot working on the current task until it's done. |
+| [session-communication](.github/skills/session-communication/SKILL.md) | How to coordinate safely between independent Copilot sessions. |
+| [workflow-discovery](.github/skills/workflow-discovery/SKILL.md) | Find the right skill, prompt or agent without loading all of them. |
+
+## How it stays safe
+
+- Nothing is installed without one explicit approval, and the profile block
+  is removed with `node scripts/install-shell.mjs --uninstall`.
+- Repo mode is off for every project until you run `<name> enable <alias>`.
+- A missing project is cloned only when you ask for it and it has a `remote`.
+- No credentials are stored. Copilot permissions and models are left alone.
+
+## Requirements
+
+GitHub Copilot CLI, git and Node.js. Works with PowerShell, bash and zsh on
+Windows, macOS and Linux.
+
+## Develop Eyrie
+
+```text
+node --test (all *.test.mjs files under .github/extensions/eyrie and scripts)
+```
+
+See the [extension README](.github/extensions/eyrie/README.md) for the exact
+command and module layout.
