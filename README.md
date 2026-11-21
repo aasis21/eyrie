@@ -1,13 +1,13 @@
 # Cortex HQ
 
-One folder to open in Copilot CLI or Claude Code when you work across projects.
-Pick your own name, start with the projects you care about, and teach your HQ how
-you like to work. Cortex supplies the starting patterns; the result is yours.
+Build a personal HQ for GitHub Copilot CLI. Give it your own name, register the
+projects you work on, and teach Copilot how you like to work across them.
+Cortex uses Copilot CLI's built-in instructions, skills, and agents. It doesn't
+bundle the Axon extension or add custom commands, runtime hooks, or MCP servers.
 
 ## Set up my HQ
 
-Paste this into Copilot CLI or Claude Code from a directory where the assistant
-can create the new HQ:
+Paste this into Copilot CLI from a directory where it can create the new HQ:
 
 > Help me set up my own HQ from https://github.com/aasis21/cortex-hq. Read
 > `docs/setup-prompt.md` in that repo and follow it. Ask me one question at a
@@ -16,12 +16,12 @@ can create the new HQ:
 If your assistant can't open GitHub links, copy the [full setup prompt](docs/setup-prompt.md)
 and point it to a local Cortex checkout or supply the named reference files
 from one commit. No shell profile or global configuration changes are needed.
-After setup, open the HQ folder in your usual assistant and try:
+After setup, run `copilot` from your HQ folder and try:
 “Which projects are registered, and what workflows are available for one of them?”
 
 ## Review updates for my HQ
 
-Open your HQ in your assistant and paste:
+Run `copilot` from your HQ folder and paste:
 
 > Review my local HQ for useful updates from https://github.com/aasis21/cortex-hq.
 > Read `docs/update-prompt.md` in that repo and follow it. Recommend what to
@@ -35,8 +35,7 @@ against the same upstream revision so nothing pending is lost.
 
 ## What goes in an HQ
 
-- `AGENTS.md` describes how to route requests and how you want the assistant to
-  work. Claude Code setups use a `CLAUDE.md` that imports it.
+- `AGENTS.md` tells Copilot how to route requests and how you want it to work.
 - `registry.json` maps project aliases to existing checkouts and helps route
   work to the right repo. Use an absolute path, a path starting with `~/`, or
   a path relative to the HQ. The target repo's instructions govern the work.

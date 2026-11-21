@@ -1,6 +1,6 @@
 # Review updates for my HQ
 
-Help me selectively bring useful changes from
+Help me selectively bring useful changes into my GitHub Copilot CLI HQ from
 https://github.com/aasis21/cortex-hq into my existing HQ. My local setup governs
 how I work. Do not reinstall Cortex, pull it into my HQ, or overwrite my setup
 to match upstream.
@@ -25,7 +25,7 @@ to match upstream.
    For each meaningful change, recommend **adopt** (fits as-is), **adapt**
    (merge the useful part into my conventions), or **skip** (not useful or
    conflicts with a deliberate choice). Explain why and show the proposed
-   local file changes, including any client-specific destinations. Preserve
+   local file changes, including their destinations in my HQ. Preserve
    my HQ name, project entries, preferences, and custom workflows by default.
    Don't treat an upstream rename or deletion as approval to remove my files.
    Check for dependencies between recommendations. On resume, distinguish

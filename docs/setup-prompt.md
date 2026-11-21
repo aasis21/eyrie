@@ -1,6 +1,6 @@
 # Set up my HQ
 
-Help me create my own project HQ using
+Help me create my own GitHub Copilot CLI project HQ using
 https://github.com/aasis21/cortex-hq as a starting point. I want a local folder
 that reflects how I work, not a clone of the upstream repository.
 
@@ -10,26 +10,23 @@ that reflects how I work, not a clone of the upstream repository.
    GitHub access isn't available, ask for a separate local Cortex checkout or
    for the reference files with their source commit. Don't invent contents or
    record an unverified revision as a baseline.
-2. Ask me one question at a time about what you don't already know: which
-   assistant(s) I use (Copilot CLI, Claude Code, or both), my HQ name and folder,
-   which existing project folders to register, and what working preferences
-   should go in the HQ instructions. Let me start with no projects or skip
-   anything optional. Don't scan my home directory or clone projects for me.
+2. Ask me one question at a time about what you don't already know: my HQ
+   name and folder, which existing project folders to register, and what
+   working preferences should go in the HQ instructions. Let me start with
+   no projects or skip anything optional. Don't scan my home directory or
+   clone projects for me.
 3. Before writing, show the resolved destination, the project entries, the
    preferences you'll encode, and the files you'll create. Check for collisions
    first. If it's already an HQ, use the update prompt instead. If other files
    exist there, suggest a new folder. Report project paths that don't exist or
    are outside your access before asking for approval. Wait for my approval.
-4. Create only the approved files. Use `AGENTS.md` for the shared, personalized
+4. Create only the approved files. Use `AGENTS.md` for the personalized
    routing rules and `registry.json` for project aliases, paths, and short
    descriptions. Replace `{{HQ_NAME}}` with my chosen name, use the `projects`
    object for real entries, and omit the `_example` entry. Resolve relative
-   project paths from the HQ folder. For
-   Copilot CLI, put the workflow-discovery skill under `.github/skills/`;
-   for Claude Code, use `.claude/skills/` and create
-   `CLAUDE.md` with `@AGENTS.md` to import the shared rules. Use both sets of
-   client files only if I selected both. Add optional templates only if I
-   chose them. Don't install extensions, edit shell profiles or global config,
+   project paths from the HQ folder. Put the workflow-discovery skill at
+   `.github/skills/workflow-discovery/SKILL.md`. Add optional templates only if
+   I chose them. Don't install extensions, edit shell profiles or global config,
    change permissions, or add MCP servers or credentials.
 5. Include `.cortex-source.json` in the preview and create it with
    `upstream` set to `https://github.com/aasis21/cortex-hq`, `reviewedThrough`
@@ -39,8 +36,8 @@ that reflects how I work, not a clone of the upstream repository.
    either present or clearly marked by you as unavailable. If Python is
    already available, you can review and run the read-only
    `scripts/check_registry.py` from the pinned upstream revision against
-   my registry; otherwise check it with your existing tools. Show me how to
-   open the folder in my chosen assistant and give me one prompt to try, such
+   my registry; otherwise check it with your existing tools. Tell me to run
+   `copilot` from the HQ folder and give me one prompt to try, such
    as "Which projects are registered, and where would you route a task in
    `<alias>`?" If you can't write locally, give me the proposed files instead
    and don't claim they were installed.

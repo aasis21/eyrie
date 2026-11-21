@@ -10,9 +10,8 @@ description: Find the right project or HQ skill, prompt, or agent without loadin
    rather than switching just to discover workflows.
 2. Look at the owning project's configured workflow directories first, then
    this HQ's shared workflows. Common places are `.github/skills/`,
-   `.github/prompts/`, `.github/agents/`, `.claude/skills/`, and
-   `.claude/agents/`. Use filenames and frontmatter names and descriptions
-   before searching file bodies.
+   `.github/prompts/`, and `.github/agents/`. Use filenames and frontmatter
+   names and descriptions before searching file bodies.
 3. For a catalog request, return names, descriptions, and paths. For a task,
    pick the best match and then read only that workflow and its required
    references. If nothing fits, follow the project's regular instructions.
