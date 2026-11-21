@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>cortex — your work control center</title>
-<meta name="description" content="cortex is a single folder you open Copilot CLI from to orchestrate all your projects: triage a request, route it to the right repo, dispatch a specialist, capture loose ideas. Run multiple focused HQs side by side." />
+<meta name="description" content="Set up your own project HQ with Copilot CLI or Claude Code. Choose a name, connect your projects, and make it work your way." />
 <meta property="og:title" content="cortex" />
-<meta property="og:description" content="A generic work control center for Copilot CLI. One folder, every project." />
+<meta property="og:description" content="A personal work HQ for Copilot CLI or Claude Code. One folder, every project." />
 <meta name="theme-color" content="#0a0c10" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@ h1{font-size:3.4rem;margin:.2em 0;letter-spacing:-.02em}
 .tag{color:var(--accent);font-family:"JetBrains Mono",monospace;font-size:.85rem;text-transform:uppercase;letter-spacing:.18em}
 p{color:var(--dim);font-size:1.15rem}
 code,pre{font-family:"JetBrains Mono",monospace}
-pre{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;overflow:auto;color:var(--accent2);font-size:.95rem}
+pre{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--accent2);font-size:.95rem}
 h2{font-size:1.6rem;margin-top:2.5rem}
 ul{color:var(--dim)} li{margin:.3rem 0}
 b{color:var(--fg)}
@@ -34,21 +34,24 @@ footer{margin-top:4rem;color:var(--faint);font-size:.85rem;font-family:"JetBrain
 <div class="wrap">
   <div class="tag">work control center</div>
   <h1>cortex</h1>
-  <p>One folder you open Copilot CLI from to orchestrate <b>all</b> your projects. Triage a request, route it to the right repo, dispatch a specialist, capture loose ideas — without ever touching your global config.</p>
+  <p>One folder for working across projects in <b>Copilot CLI or Claude Code</b>. Give it your own name, tell it how you work, and let it route requests to the right repo.</p>
 
-  <h2>Install</h2>
-  <pre>irm https://raw.githubusercontent.com/aasis21/cortex-hq/main/install.ps1 | iex</pre>
-  <p>Scaffolds an HQ under <code>~</code> and registers a launch command. Defaults to <b>cortex</b>, or pick another so several focused HQs coexist on one machine:</p>
+  <h2>Set up my HQ</h2>
+  <p>Paste into Copilot CLI or Claude Code. Your assistant asks about your projects and preferences, then previews what it will create.</p>
+  <pre>Help me set up my own HQ from https://github.com/aasis21/cortex-hq. Read docs/setup-prompt.md in that repo and follow it. Ask me one question at a time and show me the plan before creating files.</pre>
+  <p>Keep the name <b>cortex</b> or pick your own:</p>
   <div class="names"><span>cortex</span><span>neuron</span><span>nexus</span><span>axon</span><span>hub</span><span>helm</span><span>atlas</span><span>+ custom</span></div>
-  <p>Cross-platform: <code>python install.py</code></p>
+
+  <h2>Review updates for my HQ</h2>
+  <p>Open your HQ and paste this. Your assistant will compare upstream changes with your setup, not replace it.</p>
+  <pre>Review my local HQ for useful updates from https://github.com/aasis21/cortex-hq. Read docs/update-prompt.md in that repo and follow it. Recommend what to adopt, adapt, or skip, and don't edit anything until I approve the changes.</pre>
 
   <h2>What you get</h2>
   <ul>
     <li><b>registry.json</b> — single source of truth for your projects</li>
     <li><b>orchestrator</b> — triages a request and routes it to the right repo</li>
-    <li><b>specialist template</b> — one focused agent per repo</li>
+    <li><b>workflow discovery</b> — find relevant skills and prompts without loading them all</li>
     <li><b>your folder</b> — add prompts, skills, scripts as you grow</li>
-    <li><b>self-contained</b> — never writes to <code>~/.copilot</code>; MCP loads locally</li>
   </ul>
 
   <footer>aasis21/cortex-hq · MIT</footer>

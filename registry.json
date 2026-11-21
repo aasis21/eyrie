@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Single source of truth for all projects orchestrated from this HQ. Only the project-router skill / scripts should mutate this file. Add your projects under 'projects'; '_example' is an ignored reference template.",
+  "description": "Project catalog for this HQ. Add entries under 'projects'; '_example' is ignored. Paths can be absolute, home-relative, or relative to the HQ folder.",
   "projects": {},
   "_example": {
     "myproject": {
