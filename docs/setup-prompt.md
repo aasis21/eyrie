@@ -28,8 +28,9 @@ it as a git remote; my HQ is mine.
    `lore/me.md`.
 4. **Preview once.** Show the folder, every file you'll create, the registry
    entries (path, description, `remote` from `git remote get-url origin` when
-   present), the shell profile line, and any opt-ins I chose (the schedule's
-   exact command and time, the MCP entry). Say plainly that `<name>` is only my
+   present), the `UPSTREAM.md` adoption summary, the shell profile line, and
+   any opt-ins I chose (the schedule's exact command and time, the MCP entry).
+   Say plainly that `<name>` is only my
    terminal command: inside Copilot the engine keeps the Eyrie name
    (`/eyrie`, `eyrie_*` tools). Flag
    project paths that don't exist. If the folder is already an HQ, stop and
@@ -72,10 +73,38 @@ it as a git remote; my HQ is mine.
        `/bin/zsh -lc 'cd "<hq>" && <copilot command>'`, loaded with
        `launchctl bootstrap gui/$(id -u) <plist>`; remove with
        `launchctl bootout gui/$(id -u) <plist>` and delete the file.
-6. **Record the source.** Create `.eyrie-source.json` with `upstream`
-   `https://github.com/aasis21/eyrie`, `reviewedThrough` set to the pinned
-   SHA, and an empty `decisions` array. It records where my HQ started, not
-   which files I must keep. Offer to `git init` the HQ and commit "Make it
+6. **Record what I chose.** Create `UPSTREAM.md` in my HQ root, even if Lore
+   is off. It is one adoption log, not a JSON file plus a separate summary.
+   Use YAML frontmatter for `description`, `upstream`
+   `https://github.com/aasis21/eyrie`, and `reviewedThrough` (the verified full
+   SHA). Below it, add a dated setup entry with that full revision and each
+   meaningful choice: stable source-relative `change`, `action` (`adopt`,
+   `adapt`, or `skip`), local destination or result, and why. Include optional
+   pieces I declined; only call something adopted once it was actually built.
+   Start with this shape, replacing the date and SHA placeholders:
+
+   ```markdown
+   ---
+   description: Upstream source and adoption history for {{HQ_NAME}}.
+   upstream: https://github.com/aasis21/eyrie
+   reviewedThrough: "{{UPSTREAM_SHA}}"
+   ---
+   # Upstream adoption log
+
+   ## {{DATE}} - Setup
+   Revision: `{{UPSTREAM_SHA}}`
+
+   | Change | Action | Local destination / result | Reason |
+   |---|---|---|---|
+   | `.github/extensions/eyrie` | adopt | `.github/extensions/eyrie` | Selected for project discovery. |
+   ```
+
+   Keep source state only in frontmatter and decisions only in the history;
+   don't duplicate them in a `decisions` array. Preserve any intentional local
+   name mapping as optional `localRename` metadata. `AGENTS.md` points to this
+   record; if I have a Lore overview for this HQ, add a pointer there too, not
+   another copy of the history. This is provenance, not a requirement to keep
+   the HQ identical to Eyrie. Offer to `git init` the HQ and commit "Make it
    mine" as my own repository, with no upstream remote.
 7. **Finish.** Delete the temporary folder. Check that `registry.json`
    parses and report unavailable paths. Then tell me: open a new terminal,

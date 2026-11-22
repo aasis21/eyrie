@@ -51,6 +51,7 @@ These apply to every task and project. Edit them to match how you work.
 
 | Content | Location |
 |---|---|
+| Upstream source and adoption decisions | `UPSTREAM.md` (YAML metadata and dated history) |
 | Project code, tests and docs | The project's checkout or task worktree |
 | Shared skills, prompts and agents | This HQ's `.github/` folders |
 | Learned facts and preferences | `lore/` (see **Lore**) |
@@ -60,6 +61,16 @@ These apply to every task and project. Edit them to match how you work.
 | One-off command inputs | The system temp folder; delete after use |
 
 Never leave files loose in the HQ or a repository root.
+
+## Keep the upstream adoption record
+
+When present, `UPSTREAM.md` is the HQ's single source and adoption log. Read it
+before reviewing upstream updates or explaining which upstream pieces the HQ
+uses. Its YAML frontmatter holds the source and completed/pending review; its
+dated history records adopt/adapt/skip choices, local destinations and reasons.
+Check current files too: a completed review is not a pristine installed version.
+Preserve deliberate skips and local tuning. The log is context, not permission
+to overwrite them, and belongs here even when Lore is off.
 
 ## Run commands and wait
 

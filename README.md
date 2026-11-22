@@ -42,6 +42,10 @@ Open your HQ and paste:
 Copilot compares what changed in Eyrie since your last review with your tuned
 HQ and recommends, change by change, whether to **adopt**, **adapt** or
 **skip** it. Your name, projects, rules and custom workflows stay yours.
+`UPSTREAM.md` keeps the source and reviewed commit in YAML frontmatter, with
+a dated history of what was adopted, adapted or skipped, where it landed and
+why. The HQ consults this one record; updates preserve earlier decisions and
+migrate older JSON source records only with your approval.
 
 ## What you get
 
@@ -50,6 +54,7 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
 | Your command | `<name>` opens Copilot in your HQ from any terminal. `<name> enable <alias>` lets Copilot use HQ tools inside that project too. |
 | `registry.json` | Your projects: path, description, `remote`, tags, `auto_activate`, `enabled`, `worktrees`. |
 | `AGENTS.md` | How you like Copilot to work (talk, ground claims, scope), plus routing rules. |
+| `UPSTREAM.md` | One upstream adoption log: YAML source/review metadata, plus dated adopt/adapt/skip decisions, local destinations and reasons. |
 | [Eyrie extension](.github/extensions/eyrie/README.md) | `eyrie_activate`, `eyrie_deactivate`, `eyrie_peek` and `eyrie_search` bring any project's skills, prompts, agents and instructions into your HQ session. `/eyrie status` shows what's active. |
 | Session messaging | `eyrie_session_list`, `eyrie_session_send` and `eyrie_session_inbox` let separate Copilot sessions on your machine coordinate. |
 | `remote_agent` | Delegates to remote agents you approve in `remote-agents.json`, over A2A. Tokens come from an environment variable or a local command, never from the file. |
