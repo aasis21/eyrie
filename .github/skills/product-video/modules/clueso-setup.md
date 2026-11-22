@@ -21,7 +21,10 @@ OAuth 2.1 authorization code with PKCE and dynamic client registration.
 No API key, manually supplied client ID, secret, or npx wrapper is needed.
 Google sign-in works; an account need not be created beforehand.
 For unexpected authentication behavior, read
-`https://www.clueso.io/auth.md` before improvising.
+`https://www.clueso.io/auth.md` before improvising. Official setup guide:
+[Clueso MCP setup](https://help.clueso.io/mcp-setup); source and details:
+[clueso-ai/clueso-mcp](https://github.com/clueso-ai/clueso-mcp). Any Clueso plan
+works; some features need a paid plan.
 
 **HQ setup (preferred).** Add Clueso to the HQ's `mcp-config.json` overlay,
 which the launcher passes to Copilot on top of the user's normal
