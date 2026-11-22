@@ -25,7 +25,9 @@ it as a git remote; my HQ is mine.
    `lore/me.md`.
 4. **Preview once.** Show the folder, every file you'll create, the registry
    entries (path, description, `remote` from `git remote get-url origin` when
-   present), the shell profile line, and the Copilot extension loader. Flag
+   present), and the shell profile line. Say plainly that `<name>` is only my
+   terminal command: inside Copilot the engine keeps the Eyrie name
+   (`/eyrie`, `eyrie_*` tools). Flag
    project paths that don't exist. If the folder is already an HQ, stop and
    suggest the update prompt instead; if it has other files, suggest a new
    folder. Wait for one approval.
@@ -40,8 +42,8 @@ it as a git remote; my HQ is mine.
    Don't copy `docs/` or `README.md`.
    Then run, from my HQ:
    `node scripts/install-shell.mjs --home "<hq>" --command "<name>"`.
-   It adds one marked block to my shell profile and installs the repo-mode
-   loader; show me its output. Don't add MCP servers, credentials or remote
+   It adds one marked block to my shell profile and nothing under
+   `~/.copilot`; show me its output. Don't add MCP servers, credentials or remote
    agents, and don't change Copilot permissions.
 6. **Record the source.** Create `.eyrie-source.json` with `upstream`
    `https://github.com/aasis21/eyrie`, `reviewedThrough` set to the pinned
@@ -52,7 +54,8 @@ it as a git remote; my HQ is mine.
    parses and report unavailable paths. Then tell me: open a new terminal,
    type `<name>`, run `/eyrie status`, and try "Which projects are registered,
    and where would you route a task in `<alias>`?". Mention
-   `<name> enable <alias>` to use the HQ tools inside a project, and
+   `<name> enable <alias>` to use the HQ tools inside a project (the first
+   enable installs a small loader under `~/.copilot/extensions/eyrie`), and
    `node scripts/install-shell.mjs --uninstall` to remove the profile block.
    If you couldn't write something, say so plainly and never claim it was
    installed.

@@ -55,12 +55,19 @@ test("dry run reports the change without writing anything", () => {
     assert.equal(existsSync(profile), false);
 });
 
-test("installs the repository-mode loader into the user's Copilot extensions", () => {
+test("leaves the repository-mode loader to enable and only refreshes an existing one", () => {
     const profile = join(sandbox, "loader", "profile.ps1");
-    install("--home", hqRoot, "--command", "eyrie", "--profile-file", profile);
-    const loader = readFileSync(join(home, ".copilot", "extensions", "eyrie", "extension.mjs"), "utf8");
-    assert.ok(loader.includes(`const eyrieHome = ${JSON.stringify(hqRoot)};`));
+    const loaderFile = join(home, ".copilot", "extensions", "eyrie", "extension.mjs");
+    const output = install("--home", hqRoot, "--command", "eyrie", "--profile-file", profile);
+    assert.match(output, /`eyrie enable <alias>` installs its loader/);
+    assert.equal(existsSync(loaderFile), false);
     assert.match(readFileSync(profile, "utf8"), /\. \(Join-Path \$env:EYRIE_HOME 'profile\.ps1'\)/);
+
+    mkdirSync(dirname(loaderFile), { recursive: true });
+    writeFileSync(loaderFile, '// Installed under ~/.copilot/extensions/eyrie; stale\nconst eyrieHome = "/old/hq";\n');
+    assert.match(install("--home", hqRoot, "--command", "eyrie", "--profile-file", profile), /Refreshed: repository-mode loader/);
+    assert.ok(readFileSync(loaderFile, "utf8").includes(`const eyrieHome = ${JSON.stringify(hqRoot)};`));
+    rmSync(dirname(loaderFile), { recursive: true, force: true });
 });
 
 test("quotes paths safely and preserves CRLF profiles", () => {

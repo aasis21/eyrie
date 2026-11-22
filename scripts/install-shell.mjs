@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Add, replace or remove the Eyrie block in shell profiles, and install the
-// repository-mode loader. Touches nothing outside the marked block.
+// Add, replace or remove the Eyrie block in shell profiles, and refresh an
+// already-installed repository-mode loader. Touches nothing outside the marked
+// block. `<command> enable <alias>` installs the loader on first use.
 //
 // Usage:
 //   node scripts/install-shell.mjs --home <hq> --command <name>
@@ -12,7 +13,7 @@ import { homedir } from "node:os";
 import { delimiter, dirname, extname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { installLoader, loaderPath } from "./repo-mode.mjs";
+import { LOADER_MARKER, installLoader, loaderPath } from "./repo-mode.mjs";
 
 export const START_MARKER = "# >>> eyrie >>>";
 export const END_MARKER = "# <<< eyrie <<<";
@@ -147,13 +148,17 @@ export function run(argv, log = console.log) {
         log(`${prefix}${shell}: ${action} Eyrie block in ${file}`);
         if (action !== "removed") log(block.split("\n").map((line) => `    ${line}`).join("\n"));
     }
+    const loader = loaderPath();
+    const hasLoader = existsSync(loader) && readFileSync(loader, "utf8").startsWith(LOADER_MARKER);
     if (args.uninstall) {
-        log(`Left the repository-mode loader at ${loaderPath()}; delete it by hand if no longer needed.`);
+        if (hasLoader) log(`Left the repository-mode loader at ${loader}; delete it by hand if no longer needed.`);
+    } else if (!hasLoader) {
+        log(`Repository mode is off; \`${args.command} enable <alias>\` installs its loader when you first need it.`);
     } else if (args.dryRun) {
-        log(`${prefix}Would install the repository-mode loader at ${loaderPath()}`);
+        log(`${prefix}Would refresh the repository-mode loader at ${loader}`);
     } else {
-        const loader = installLoader(args.home);
-        log(`${loader.changed ? "Installed" : "Unchanged"}: repository-mode loader at ${loader.path}`);
+        const result = installLoader(args.home);
+        log(`${result.changed ? "Refreshed" : "Unchanged"}: repository-mode loader at ${result.path}`);
     }
     if (!args.dryRun) log("Open a new terminal (or reload your profile) to use the command.");
 }

@@ -28,6 +28,8 @@ Copilot asks at most four questions, each with a default (name, folder,
 projects, skills), shows one preview, and builds only after you approve. It
 adds a single marked block to your shell profile so your name becomes a
 command. Then open a new terminal, type your command and run `/eyrie status`.
+Your name is the terminal command; inside Copilot the engine stays Eyrie
+(`/eyrie` and the `eyrie_*` tools), so updates keep applying cleanly.
 
 ## Get new things
 
@@ -67,7 +69,8 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
 
 - Nothing is installed without one explicit approval, and the profile block
   is removed with `node scripts/install-shell.mjs --uninstall`.
-- Repo mode is off for every project until you run `<name> enable <alias>`.
+- Repo mode is off for every project until you run `<name> enable <alias>`;
+  only then is a small loader added under `~/.copilot/extensions/eyrie`.
 - A missing project is cloned only when you ask for it and it has a `remote`.
 - No credentials are stored. Copilot permissions and models are left alone.
 
