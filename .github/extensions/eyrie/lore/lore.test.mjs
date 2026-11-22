@@ -54,6 +54,23 @@ test("injects me.md, the area overview capped, and topic descriptions", () => wi
     assert.match(lore.reminder(), /^Lore: .*Learned: \.\.\./);
 }));
 
+test("shows a new dream digest once, and again only after it changes", () => withHq((hq) => {
+    const dreams = join(hq, "lore", ".dreams");
+    mkdirSync(dreams, { recursive: true });
+    const latest = join(dreams, "latest.md");
+    writeFileSync(latest, "- lore/me.md: prefers short answers");
+    const lore = createLore({ hqHome: hq });
+    const start = () => lore.startupContext({ mode: "hq", getProject: () => null });
+
+    assert.match(start(), /## Dreamed since your last session\n\n- lore\/me\.md: prefers short answers[\s\S]*undo <item>/);
+    assert.doesNotMatch(start(), /Dreamed since/);
+
+    writeFileSync(latest, "- Nothing new.");
+    utimesSync(latest, new Date(), new Date(Date.now() + 60_000));
+    assert.match(start(), /Nothing new\./);
+    assert.doesNotMatch(start(), /Dreamed since/);
+}));
+
 test("notes how old a Lore file is only when it is read with a file-read tool", () => withHq((hq) => {
     const root = join(hq, "lore");
     mkdirSync(root);

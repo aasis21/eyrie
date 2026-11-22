@@ -17,15 +17,19 @@ it as a git remote; my HQ is mine.
    - The folder (default: `~/<name>`).
    - Projects to register: I can paste paths, name one folder for you to
      list git repositories in, or skip. Don't scan anything else.
-   - Skills to keep, all on by default: `falconry`, `preen`, `tick-me`,
-     `session-communication` and `workflow-discovery`; and Lore memory (on
-     by default).
+   - Skills and extras. Skills, all on by default: `falconry`, `preen`,
+     `tick-me`, `session-communication`, `workflow-discovery`,
+     `dev-workflow`, `relay`, `corpus`, `web-capture` and `product-video`.
+     Lore memory with dreaming (on by default). Two opt-ins, off by default:
+     an overnight dream schedule (needs Lore), and the Clueso MCP server
+     (only if `product-video` is kept).
    Use defaults for anything I skip. If I mention how I like to work, fold it
    into "How to work with me" in `AGENTS.md` and, with Lore kept, into
    `lore/me.md`.
 4. **Preview once.** Show the folder, every file you'll create, the registry
    entries (path, description, `remote` from `git remote get-url origin` when
-   present), and the shell profile line. Say plainly that `<name>` is only my
+   present), the shell profile line, and any opt-ins I chose (the schedule's
+   exact command and time, the MCP entry). Say plainly that `<name>` is only my
    terminal command: inside Copilot the engine keeps the Eyrie name
    (`/eyrie`, `eyrie_*` tools). Flag
    project paths that don't exist. If the folder is already an HQ, stop and
@@ -37,14 +41,37 @@ it as a git remote; my HQ is mine.
    `profile.sh`, `scripts/`, `registry.json`, `remote-agents.json` and
    `.gitignore`. Replace `{{HQ_NAME}}` and `{{COMMAND}}`. Put real entries
    under `projects` and omit `_example`. With Lore kept, copy `lore/me.md`
-   and seed it with any working preferences I mentioned; with Lore skipped,
-   omit `lore/` and remove the "Lore (memory)" section from `AGENTS.md`.
+   and `.github/prompts/dream.prompt.md`, and seed `lore/me.md` with any
+   working preferences I mentioned; with Lore skipped, omit both, and remove
+   the "Lore (memory)" section and the "dream" code word from `AGENTS.md`.
+   With `relay` kept, copy `relay/` (its `ready/` and `completed/` folders);
+   with `corpus` kept, copy `corpus/index.md`. Remove rows and mentions in
+   `AGENTS.md` for anything I skipped.
    Don't copy `docs/` or `README.md`.
    Then run, from my HQ:
    `node scripts/install-shell.mjs --home "<hq>" --command "<name>"`.
    It adds one marked block to my shell profile and nothing under
-   `~/.copilot`; show me its output. Don't add MCP servers, credentials or remote
-   agents, and don't change Copilot permissions.
+   `~/.copilot`; show me its output. Don't add credentials or remote agents,
+   don't change Copilot permissions, and add MCP servers only as below.
+   - **Clueso (opt-in):** create or extend `<hq>/mcp-config.json` (the HQ's
+     overlay; my command loads it) with
+     `{"mcpServers": {"clueso": {"type": "http", "url": "https://connect.clueso.io/mcp"}}}`.
+     I sign in on first use; store no token.
+   - **Overnight dream (opt-in):** schedule a daily run (default 03:00 local)
+     that starts in my HQ folder and runs
+     `copilot -p "Follow .github/prompts/dream.prompt.md" --no-ask-user --allow-tool=write --allow-tool="shell(git:*)" --deny-tool="shell(git push)" --add-dir "<copilot config folder>"`,
+     using the absolute path to `copilot`. Keep allow flags to that minimum,
+     adding only a read-only tool for the session database if needed (such as
+     `shell(sqlite3:*)`). Per OS:
+     - Windows: `schtasks /Create /SC DAILY /ST 03:00 /TN "<name>-dream" /TR "<shell> -NoProfile -Command \"Set-Location '<hq>'; <copilot command>\""`;
+       remove with `schtasks /Delete /TN "<name>-dream" /F`.
+     - Linux: one `crontab` line, `0 3 * * * cd "<hq>" && <copilot command> >/dev/null 2>&1`;
+       remove that line with `crontab -e`.
+     - macOS: a LaunchAgent `~/Library/LaunchAgents/<name>.dream.plist` with
+       `StartCalendarInterval` hour 3 and `ProgramArguments` running
+       `/bin/zsh -lc 'cd "<hq>" && <copilot command>'`, loaded with
+       `launchctl bootstrap gui/$(id -u) <plist>`; remove with
+       `launchctl bootout gui/$(id -u) <plist>` and delete the file.
 6. **Record the source.** Create `.eyrie-source.json` with `upstream`
    `https://github.com/aasis21/eyrie`, `reviewedThrough` set to the pinned
    SHA, and an empty `decisions` array. It records where my HQ started, not
@@ -57,5 +84,7 @@ it as a git remote; my HQ is mine.
    `<name> enable <alias>` to use the HQ tools inside a project (the first
    enable installs a small loader under `~/.copilot/extensions/eyrie`), and
    `node scripts/install-shell.mjs --uninstall` to remove the profile block.
+   With Lore kept, mention saying "dream" to learn from recent sessions, and
+   how to remove the dream schedule if I added one.
    If you couldn't write something, say so plainly and never claim it was
    installed.

@@ -61,7 +61,10 @@ hook does nothing. The rules for what to save live in `AGENTS.md` "Lore (memory)
 - Session start: injects `lore/me.md`, the overview `lore/<area>/overview.md` (capped
   at about 4 KB) and a list of topic files with their frontmatter `description`. The
   area is the primary project's `area` in repository mode, and the registry's
-  top-level `defaultArea` (if set) in HQ mode.
+  top-level `defaultArea` (if set) in HQ mode. If `lore/.dreams/latest.md` (the
+  digest from the last "dream" run) changed since it was last shown, it is included
+  once under "Dreamed since your last session"; `lore/.dreams/last-shown.txt`
+  records its modification time.
 - Every prompt: a one-line reminder to save corrections, repeated asks, rework and
   costly discoveries, and to end the reply with `Learned: ...`.
 - After a file-read tool opens a Lore file: how long ago it was edited, and a

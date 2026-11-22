@@ -39,7 +39,8 @@ These apply to every task and project. Edit them to match how you work.
    find a workflow across projects. `/eyrie status` shows what is active.
 3. Work in the project's registered checkout. Read its `AGENTS.md`, README and
    instructions before acting: the HQ routes work, the project's own
-   instructions govern implementation, validation and delivery.
+   instructions govern implementation, validation and delivery. For build,
+   commit, push and PR work, follow the `dev-workflow` skill.
 4. A registered project is not permission to clone or edit it. Activation
    clones a missing checkout only when the entry has a `remote` and I asked
    for that project. Never substitute another checkout for a missing one.
@@ -52,6 +53,9 @@ These apply to every task and project. Edit them to match how you work.
 |---|---|
 | Project code, tests and docs | The project's checkout or task worktree |
 | Shared skills, prompts and agents | This HQ's `.github/` folders |
+| Learned facts and preferences | `lore/` (see **Lore**) |
+| Designs, research and decisions I ask to keep | `corpus/` (`corpus` skill) |
+| Handoffs for another machine or a later session | `relay/ready/`, then `relay/completed/` (`relay` skill) |
 | Screenshots, logs, traces and other generated output | Outside any repo (for example a temp or local app-data folder) |
 | One-off command inputs | The system temp folder; delete after use |
 
@@ -95,11 +99,16 @@ session's project group (`lore/<area>/overview.md`, from the project's
 - **Review:** "what do you know about me" → summarize Lore, flag stale or
   duplicated facts, and offer to prune them.
 - **Promote:** when a learning repeats, move it into "How to work with me".
+- **Dream:** `.github/prompts/dream.prompt.md` learns from recent sessions,
+  updates Lore and writes a digest to `lore/.dreams/latest.md`, shown once at
+  the next session start. On "undo <item>", revert that change.
 
 ## Code words
 
 - **roost / aloft:** under the `falconry` skill, plan only until I say "aloft".
 - **preen:** a read-only code audit (`preen` skill); fixes wait for my go-ahead.
+- **dream:** run `.github/prompts/dream.prompt.md` now to learn from my recent
+  sessions into Lore.
 
 ## Keep secrets out
 

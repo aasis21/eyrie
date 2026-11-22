@@ -6,9 +6,10 @@
 //   *.md                  cross-project topics (listed)
 //   <area>/overview.md    map for the session's project group (registry.json `area`)
 //   <area>/*.md           topic files (listed by frontmatter description)
+//   .dreams/latest.md     digest from the last "dream" run (shown once per new digest)
 // Rules for saving live in AGENTS.md "Lore".
 
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
 
 const MAX_OVERVIEW_CHARS = 4000;
@@ -60,7 +61,25 @@ function topicEntries(root, area) {
     return entries.slice(0, MAX_LISTED_TOPICS);
 }
 
-export function formatStartupContext({ root, area }) {
+/** Returns the latest dream digest once per new digest, recording that it was shown. */
+export function takeNewDigest(root) {
+    const dreamsDir = join(root, ".dreams");
+    const latest = join(dreamsDir, "latest.md");
+    if (!existsSync(latest)) return "";
+    const marker = join(dreamsDir, "last-shown.txt");
+    const stamp = String(statSync(latest).mtimeMs);
+    if (existsSync(marker) && readFileSync(marker, "utf8").trim() === stamp) return "";
+    const digest = readFileSync(latest, "utf8").trim();
+    try {
+        mkdirSync(dreamsDir, { recursive: true });
+        writeFileSync(marker, stamp);
+    } catch {
+        // Showing the digest again next session is harmless.
+    }
+    return digest;
+}
+
+export function formatStartupContext({ root, area, digest = "" }) {
     if (!existsSync(root)) return "";
     const parts = [
         "# Lore",
@@ -78,6 +97,9 @@ export function formatStartupContext({ root, area }) {
             "## Topic files (read when relevant)\n\n" +
             topics.map((t) => `- \`${t.path}\`${t.description ? ` — ${t.description}` : ""}`).join("\n"),
         );
+    }
+    if (digest) {
+        parts.push(`## Dreamed since your last session\n\n${digest}\n\nMention this in one line in your first reply; the user can say "undo <item>".`);
     }
     return parts.join("\n\n");
 }
@@ -103,7 +125,7 @@ export function createLore({ hqHome }) {
         root,
         startupContext({ mode, primaryAlias, getProject, defaultArea }) {
             const area = resolveArea({ mode, primaryAlias, getProject, defaultArea });
-            return formatStartupContext({ root, area });
+            return formatStartupContext({ root, area, digest: takeNewDigest(root) });
         },
         postToolUse(input) {
             const note = loreReadNote(input || {}, root);

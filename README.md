@@ -25,7 +25,7 @@ Open `copilot` anywhere and paste:
 > `docs/setup-prompt.md` in that repo and follow it.
 
 Copilot asks at most four questions, each with a default (name, folder,
-projects, skills), shows one preview, and builds only after you approve. It
+projects, skills and extras), shows one preview, and builds only after you approve. It
 adds a single marked block to your shell profile so your name becomes a
 command. Then open a new terminal, type your command and run `/eyrie status`.
 Your name is the terminal command; inside Copilot the engine stays Eyrie
@@ -54,6 +54,9 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
 | Session messaging | `eyrie_session_list`, `eyrie_session_send` and `eyrie_session_inbox` let separate Copilot sessions on your machine coordinate. |
 | `remote_agent` | Delegates to remote agents you approve in `remote-agents.json`, over A2A. Tokens come from an environment variable or a local command, never from the file. |
 | Lore | Optional working memory in `lore/`. Copilot saves your corrections, repeated asks and costly discoveries as Markdown, and loads `lore/me.md` plus the overview for the project's `area` at session start. |
+| Dreaming | Say **dream** (or schedule it overnight) and Copilot reviews your recent sessions, updates Lore, promotes repeated lessons, and shows a short digest at your next session that you can undo item by item. |
+| Corpus | `corpus/` keeps full documents you ask to save (designs, research, decisions), indexed in `corpus/index.md` and read on demand. |
+| Relay | `relay/` holds handoff notes to pick up work on another machine or in a later session. |
 
 ### Skills
 
@@ -64,6 +67,11 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
 | [tick-me](.github/skills/tick-me/SKILL.md) | Recurring nudges that keep Copilot working on the current task until it's done. |
 | [session-communication](.github/skills/session-communication/SKILL.md) | How to coordinate safely between independent Copilot sessions. |
 | [workflow-discovery](.github/skills/workflow-discovery/SKILL.md) | Find the right skill, prompt or agent without loading all of them. |
+| [dev-workflow](.github/skills/dev-workflow/SKILL.md) | Build and ship in any project: commit to main, branch + PR or worktree + PR (learned per project), with PR defaults through CI green. |
+| [relay](.github/skills/relay/SKILL.md) | Save and resume unfinished work across machines and sessions. |
+| [corpus](.github/skills/corpus/SKILL.md) | Save designs, research and decisions as indexed Markdown when you ask. |
+| [web-capture](.github/skills/web-capture/SKILL.md) | Sanitized screenshots and raw screen recordings of web UIs (Playwright MCP). |
+| [product-video](.github/skills/product-video/SKILL.md) | Plan, record and produce narrated product videos with Clueso (optional Clueso MCP). |
 
 ## How it stays safe
 
@@ -73,6 +81,8 @@ HQ and recommends, change by change, whether to **adopt**, **adapt** or
   only then is a small loader added under `~/.copilot/extensions/eyrie`.
 - A missing project is cloned only when you ask for it and it has a `remote`.
 - No credentials are stored. Copilot permissions and models are left alone.
+- The overnight dream schedule and the Clueso MCP server are off unless you
+  turn them on during setup.
 
 ## Requirements
 

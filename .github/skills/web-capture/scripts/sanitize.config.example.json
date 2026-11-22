@@ -1,0 +1,24 @@
+{
+  "_comment": "Copy into the task's output folder (outside any repository; never commit real names). Regex strings use JSON escaping. Order matters: specific before general (full name before first name).",
+  "reps": [
+    ["TICKET-\\d+:?\\s*", "g", ""],
+    ["my-staging-app-1", "gi", "web-app"],
+    ["my-staging-app-2", "gi", "payments-api"],
+    ["my-test-project", "gi", "acme-shop"],
+    ["[a-z0-9-]+\\.internal\\.example\\.net", "gi", "app.example.com"],
+    ["[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", "gi", "00000000-0000-0000-0000-000000000000"],
+    ["First Last", "g", "Alex Morgan"],
+    ["\\bfirst\\b", "gi", "alex"],
+    ["@yourcompany\\.example", "gi", "@acme.example"],
+    ["Your Company Staging", "g", "Acme Production"]
+  ],
+  "cast": ["web-app", "payments-api"],
+  "oldTitles": ["test chat please ignore", "debug session 2"],
+  "pool": ["Check recent config changes", "Review connection pool limits", "Check backup job timing"],
+  "banners": ["internal preview", "trial limits", "new navigation experience"],
+  "hideNav": ["Admin tools"],
+  "orgFrom": "Your Company",
+  "org": "Acme",
+  "initials": "AM",
+  "cursor": true
+}
